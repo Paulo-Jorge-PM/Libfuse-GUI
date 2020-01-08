@@ -3,3 +3,12 @@
 Requirements: 
 - Python v.3+
 - fusepy
+- flask
+- webview
+- pydal
+
+Install commands for pip (note: pip3 for Python3):
+pip3 install fusepy
+pip3 install flask
+pip3 install webview
+pip3 install pydal
