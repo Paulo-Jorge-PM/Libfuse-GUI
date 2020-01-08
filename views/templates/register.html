@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<div id="contentBar">
+<h1>Register</h1>
+</div>
+
+<div id="mainContent">
+
+<div id="register">
+{% if status=='ask' %}
+	<form action="{{ url_for('.register') }}" name="registar" method="POST">
+		<table>
+			<tr>
+				<td><b>Username:</b> </td><td><input type="text" name="username" /></td>
+			</tr>
+			<tr>
+				<td><b>E-mail:</b> </td><td><input type="text" name="email" /></td>
+			</tr>
+			<tr>
+				<td><b>Password:</b> </td><td><input type="password" name="password" /></td>
+			</tr>
+			<tr>
+				<td colspan="2" style="text-align:right;"><input type="submit" value="Register" /></td>
+			</tr>
+		</table>
+	</form>
+{% elif status=='success' %}
+<p style="color:green;">Registration with success!</p>
+<p>Please make <a href="{{ url_for('.login') }}">login</a>.</p>
+{% elif status=='error' %}
+<p style="color:red;">Error: please try again (fields can't be empty):</p>
+<br />
+	<form action="{{ url_for('.register') }}" name="registar" method="POST">
+		<table>
+			<tr>
+				<td><b>Username:</b> </td><td><input type="text" name="username" /></td>
+			</tr>
+			<tr>
+				<td><b>E-mail:</b> </td><td><input type="text" name="email" /></td>
+			</tr>
+			<tr>
+				<td><b>Password:</b> </td><td><input type="password" name="password" /></td>
+			</tr>
+			<tr>
+				<td colspan="2" style="text-align:right;"><input type="submit" value="Register" /></td>
+			</tr>
+		</table>
+	</form>
+{% endif %}
+</div>
+</div><!--/mainContent-->
+
+<script>
+ $("#register form input[type=submit]").click(function(e){
+  if( (!$('#register form input[name=username]').val()) || (!$('#register form input[name=email]').val()) || (!$('#register form input[name=password]').val()) ) {
+  	alert("Fields can't be empty, please finish all fields before submiting");
+  	e.preventDefault();
+  }
+}); 
+</script>
+
+{% endblock %}

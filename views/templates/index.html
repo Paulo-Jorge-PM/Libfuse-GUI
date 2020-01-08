@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div id="contentBar">
+    <div id="timer">&#128337; Refresh in: <span></span></div>
+    <span><h3>SISTEMA DE FICHEIROS LIBFUSE</h3></span>
+</div>
+
+<div id="mainContent">
+<!--<button id="getMarkets" onclick="refresh()" style="float:right;">FORCE REFRESH</button>-->
+
+
+
+<p style="background:#333333;color:#ffffff;padding:1px 5px;"><b>Mountpoint:</b> {{ MOUNTPOINT }}</p>
+<p style="background:#333333;color:#ffffff;padding:1px 5px;"><b>Root:</b> {{ ROOTPATH }}</p>
+
+
+<br /><br />
+
+
+<button onclick="startfuse()" style="color:green;">MOUNT LIBFUSE</button>
+
+<br /><br />
+
+<button onclick="stopfuse()" style="color:red;">UNMOUNT LIBFUSE</button>
+
+<br /><br />
+
+<button onclick="terminal()">Open terminal in mountpoint</button>
+
+<br /><br />
+
+<button onclick="folder()">Open folder in mountpoint</button>
+
+</div>
+
+
+<script>
+function startfuse() {
+    start();
+}
+
+function stopfuse() {
+    stop();
+}
+</script>
+
+{% endblock %}
