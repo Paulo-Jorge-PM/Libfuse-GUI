@@ -8,8 +8,16 @@
 </div>
 
 <div id="mainContent">
+<span style="color:gray;">(Acesso só autorizado a administradores)</span>
 
-Acesso não autorizado.
+<h3>Utilizadores Registados:</h3>
+
+<table>
+<tr><th>UID</th><th>USERNAME</th><th>EMAIL</th><th>TYPE</th><th>REG DATE</th><th></th></tr>
+{% for user in users %}
+<tr><td>{{user["uid"]}}</td><td>{{user["username"]}}</td><td>{{user["email"]}}</td><td>{{user["userRole"]}}</td><td>{{user["dateRegistration"]}}</td><td><button>delete</button></td></tr>
+{% endfor %}
+</table>table>
 
 </div><!--/mainContent-->
 

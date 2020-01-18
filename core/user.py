@@ -7,11 +7,12 @@ from core import authentication
 class User(metaclass = ABCMeta):
 
     @abstractmethod
-    def __init__(self, idUser, username, email, password, userRole, dateRegistration, userPath):
+    def __init__(self, idUser, username, email, password, uid, userRole, dateRegistration, userPath):
         self.idUser = idUser
         self.username = username
         self.email = email
         self.password = password
+        self.uid = uid
         self.userRole = userRole
         self.dateRegistration = dateRegistration
         self.userPath = userPath

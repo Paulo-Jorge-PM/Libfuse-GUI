@@ -6,6 +6,7 @@ import secrets
 from flask import Blueprint, render_template, current_app, jsonify, json, Response, request, redirect, url_for
 
 from core import libfuse, tools
+from models import db
 
 #flaskRoutes = um Decorator da function routes do Flask started em gui.py
 flaskRoutes = Blueprint('routes', __name__)
@@ -97,7 +98,8 @@ def register():
             username = request.form["username"]
             email = request.form["email"]
             password = request.form["password"]
-            reg = current_app.auth.register(username,email,password)
+            uid = os.getuid()
+            reg = current_app.auth.register(username,email,password,uid)
             if reg == True:
                 message="success"
             else:
@@ -125,7 +127,8 @@ def login():
 
 @flaskRoutes.route('/admin')
 def admin():
-    return render_template("admin.html")
+    users = db.getUsers()
+    return render_template("admin.html", users=users)
 
 @flaskRoutes.route('/logs')
 def logs():

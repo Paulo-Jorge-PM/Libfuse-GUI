@@ -119,15 +119,16 @@ class Passthrough(Operations):
     # ============
 
     def open(self, path, flags):
-        verification = self.auth.verification()
-        if verification == True:
-            print("open verif True")
+        #verification = self.auth.verification()
+        if self.auth.verification == True:
+            self.auth.log(message="Action: OPEN | Path:" + self._full_path(path))
+            full_path = self._full_path(path)
+            return os.open(full_path, flags)
         else:
-            print("open verif FALLLLLLLLLLLLLLLLSEE")
-        self.auth.log(message="Action: OPEN | Path:" + self._full_path(path))
-        full_path = self._full_path(path)
-        return os.open(full_path, flags)
-
+            self.auth.log(message="Action: OPEN ERROR - VALIDATE FIRST!! | Path:" + self._full_path(path))
+            print("Erro: primeiro validade na APP para usar o comando OPEN")
+            return 0
+            
     def create(self, path, mode, fi=None):
         self.auth.log(message="Action: CREATE | Path:" + self._full_path(path))
         full_path = self._full_path(path)

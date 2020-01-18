@@ -7,8 +7,8 @@ from models import db
 class Client(user.User):
 
     #def __init__(self, username, email, password, userRole):
-    def __init__(self, idUser, username, email, password, userRole, dateRegistration, userPath):
-        super().__init__(idUser, username, email, password, userRole, dateRegistration, userPath)
+    def __init__(self, idUser, username, email, password, uid, userRole, dateRegistration, userPath):
+        super().__init__(idUser, username, email, password, uid, userRole, dateRegistration, userPath)
         self.userRole = "user"
 
     def logs(self):

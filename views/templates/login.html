@@ -25,7 +25,7 @@
 		</table>
 	</form>
 {% elif status=='success' %}
-<p style="color:green;">Login with success! Continue browsing: please go back to the homepage.</p>
+<p style="color:green;">Login with success! Continue browsing: please go back to the <b><a href="{{ url_for('.index') }}">homepage</a></b>.</p>
 {% elif status=='error' %}
 <p style="color:red;">Error: please try again:</p>
 <br />

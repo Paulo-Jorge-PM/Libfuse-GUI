@@ -28,11 +28,11 @@ class Auth:
     def login(self, username, password):
         user = self.db.loginUser(username,password)
         if user:
-            userPath = self.checkDir(user["id"])
+            userPath = self.checkDir(user["id"], user["uid"])
             if user["userRole"] == "user":
-                self.user = client.Client(user["id"], user["username"], user["email"], user["password"], user["userRole"], user["dateRegistration"], userPath)
+                self.user = client.Client(user["id"], user["username"], user["email"], user["password"], user["uid"], user["userRole"], user["dateRegistration"], userPath)
             elif user["userRole"] == "admin":
-                self.user = admin.Admin(user["id"], user["username"], user["email"], user["password"], user["userRole"], user["dateRegistration"], userPath)
+                self.user = admin.Admin(user["id"], user["username"], user["email"], user["password"], user["uid"], user["userRole"], user["dateRegistration"], userPath)
             
             self.loginStatus = True
             return True
@@ -41,19 +41,20 @@ class Auth:
             self.loginStatus = False
             return False
 
-    def register(self, name, email, password):
+    def register(self, name, email, password, uid):
         dateReg = datetime.datetime.now()
         try:
-            self.db.insertUser(username=name, email=email, password=password, dateRegistration=dateReg)
+            self.db.insertUser(username=name, email=email, password=password, uid=uid, dateRegistration=dateReg)
             
             return True
         except Exception as error:
             print(error)
             return False
 
-    def checkDir(self, userid):
+    def checkDir(self, userid, uid):
         dirpath = os.path.join(self.configs[2], "userid"+str(userid))
         tools.createDir(dirpath)
+        tools.dirCHOWN(dirpath, uid)
         return dirpath
 
     def logout(self):
@@ -75,10 +76,9 @@ class Auth:
         tools.createLog(path=os.path.join(self.configs[2],user_file), line=line)
         print(line)
 
-        print("log coreuuuuuuuuuuuuu +++++++++++++++++++++++++++++++")
         #self.webviewContext.load_url('http://127.0.0.1:5000/')
-        with self.flaskContext.app_context():
-            print(current_app.auth.user.username)
+        #with self.flaskContext.app_context():
+        #    print(current_app.auth.user.username)
 
 
 
@@ -94,6 +94,6 @@ class Auth:
             return False"""
 
     def verification(self):
-        
+
         return True
 

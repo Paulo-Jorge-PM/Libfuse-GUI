@@ -45,6 +45,7 @@ class Db:
                 Field('username', type='string'), 
                 Field('email', type='string'),
                 Field('password', type='string'),
+                Field('uid', type='string'),
                 Field('userRole', type='string', defaul='user'),#user, admin
                 Field('secureKey', type='string', default='0', writable=False, readable=False),#secet key token - should be used if in server side
                 Field('dateRegistration', type='datetime', writable=False, readable=False)
@@ -56,11 +57,11 @@ class Db:
         pass
 
 
-    def insertUser(self, username, email, password, dateRegistration):
+    def insertUser(self, username, email, password, uid, dateRegistration):
         self.connect()
         import secrets#generate url safe token
         secureKey = secrets.token_urlsafe()
-        self.db.users.insert(username=username, email=email, password=password, userRole="user", secureKey=secureKey, dateRegistration=dateRegistration)
+        self.db.users.insert(username=username, email=email, password=password, uid=uid, userRole="user", secureKey=secureKey, dateRegistration=dateRegistration)
         self.db.commit()
         self.db.close()
 
@@ -70,3 +71,9 @@ class Db:
         self.db.close()
         #if no user, it will return user = None
         return user
+
+    def getUsers(self):
+        self.connect()
+        users = self.db(self.db.users.id > 0 ).select()
+        self.db.close()
+        return users

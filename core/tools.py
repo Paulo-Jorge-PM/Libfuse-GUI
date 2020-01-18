@@ -6,7 +6,8 @@ import smtplib, ssl
 from email.mime.text import MIMEText
 from collections import deque
 
-def createDir(path, mode='0700'):
+#mode='0700'
+def createDir(path, mode='700'):
     #makedirs honors unmask, so in some systems permissions are ignored
     #So we first ignore unmask
     try:
@@ -14,11 +15,18 @@ def createDir(path, mode='0700'):
         if not os.path.exists(path):
             #os.makedirs(path, int(mode))
             os.makedirs(path)
+
+
     except:
         print("Error - not possible to create directory")
     finally:
         os.umask(original_umask)
 
+
+def dirCHOWN(path, uid):
+    #os.setuid(int(uid))
+    #shutil.chown(path, user=uid)
+    os.chown(path, int(uid), int(uid))
 
 def removeMount(path):
     #delete 1st
