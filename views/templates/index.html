@@ -63,8 +63,8 @@
 
 </div>
 
-
 <script>
+{% if loginStatus == True %}
 function startfuse() {
     start();
     $('.paused').hide();
@@ -77,6 +77,13 @@ function stopfuse() {
     $('.play').hide();
 }
 
+function openterminal() {
+    terminal();
+}
+
+function openfolder() {
+    folder();
+}
 
 
 var max_time=300
@@ -104,6 +111,13 @@ function verificationCode() {
 function reset() {
 window.location.replace(window.location.href)
 }
+{% else %}
+    $("button").not(".noBlock").on("click", function(e) {
+        e.preventDefault();
+        alert("Please first make login/register before using advanced functionallities!");
+        return false;
+    });
+{% endif %}
 
 </script>
 

@@ -56,11 +56,11 @@
 
     <br /><br />
 
-    <button onclick="terminal()">Open terminal in mountpoint</button>
+    <button onclick="openterminal()">Open terminal in mountpoint</button>
 
     <br /><br />
 
-    <button onclick="folder()">Open folder in mountpoint</button>
+    <button onclick="openfolder()">Open folder in mountpoint</button>
     </div>
 
 </div>
@@ -76,8 +76,9 @@
 <script>
 $(document).ready(function() {
 	$(".button").not(".noBlock").on("click", function(e) {
+		e.preventDefault();
 	    alert("Please first make login/register before using advanced functionallities!");
-	    e.preventDefault();
+	    return false;
 	});
 });
 </script>

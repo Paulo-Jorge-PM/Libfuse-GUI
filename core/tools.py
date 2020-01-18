@@ -47,31 +47,7 @@ def tail(filename, n=10):
 
 
 
-def sendEmail(message="", to="paulo.jorge.pm@gmail.com"):
-    """smtp_server = "mail.uminho.pt"
-    port = 25
-    username = "b4701"
-    sender_email = "b4701@ilch.uminho.pt"
-    password = "11J11YK5"
-
-    # Create a secure SSL context
-    context = ssl.create_default_context()
-
-    # Try to log in to server and send email
-    try:
-        server = smtplib.SMTP(smtp_server,port)
-        server.ehlo() # Can be omitted
-        server.starttls(context=context) # Secure the connection
-        server.ehlo() # Can be omitted
-        server.login(username, password)
-        server.sendmail(sender_email, to, message)
-    except Exception as e:
-        # Print any error messages to stdout
-        print(e)
-    finally:
-        server.quit() """
-
-
+def sendEmail(message, to):
     SERVER = "mail.uminho.pt"
     PORT = "25"
     USER = "b4701"
@@ -80,17 +56,17 @@ def sendEmail(message="", to="paulo.jorge.pm@gmail.com"):
     TO = [to]
     SUBJECT = 'SSI CODE VALIDATE'
 
-    # Create the email
+    # email
     message = MIMEText(message)
     message['From'] = FROM
     message['To'] = ",".join(TO)
     message['Subject'] = SUBJECT
 
-    # Sends an email
+    # send email
     email = smtplib.SMTP()
     email.connect(SERVER,PORT)
     email.starttls()
     email.login(USER,PASS)
     email.sendmail(FROM, TO, message.as_string())
     email.quit()
-    #return redirect( url_for('sucess'))
+    print("E-mail enviado para: " + to)

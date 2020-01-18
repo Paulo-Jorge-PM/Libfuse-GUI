@@ -136,6 +136,17 @@ border-top:3px solid brown;
 border-bottom:3px solid brown;*/
 }
 
+table.borders, table.borders tr, table.borders th, table.borders td {
+border:1px solid #333333;
+border-collapse: collapse;
+padding:5px 10px;
+}
+
+table.borders th {
+background:#000000;
+color:#ffffff;
+}
+
 table.noBorder, .noBorder td {
 border:none;
 margin:0;

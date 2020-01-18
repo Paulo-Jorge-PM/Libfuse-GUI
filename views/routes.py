@@ -6,7 +6,6 @@ import secrets
 from flask import Blueprint, render_template, current_app, jsonify, json, Response, request, redirect, url_for
 
 from core import libfuse, tools
-from models import db
 
 #flaskRoutes = um Decorator da function routes do Flask started em gui.py
 flaskRoutes = Blueprint('routes', __name__)
@@ -46,9 +45,11 @@ def checkCode():
 @flaskRoutes.route('/terminal')
 def terminal():
     #multi distro: xterm | gnome: gnome-terminal
-    path = "models/storage" + current_app.configs[1].split("/")[-1]
+    #path = "models/storage/" + current_app.configs[1].split("/")[-1]
     #os.system('gnome-terminal --working-directory='+'"'+ current_app.configs[1]+'"')
-    os.system('gnome-terminal --working-directory='+'"'+ path +'"')
+    #os.system('gnome-terminal --working-directory='+'"'+ path +'"')
+    #os.system('gnome-terminal --working-directory='+'"'+ current_app.configs[1] +'"')
+    os.system('gnome-terminal --working-directory=' + '"' + current_app.configs[1] + '"')
     return Response("ok")
 
 @flaskRoutes.route('/folder')
@@ -119,22 +120,24 @@ def login():
             login = current_app.auth.login(username,password)
             if login == True:
                 message="success"
+                return redirect( url_for('.index') )
             else:
                 message="error"
     else:
         message="ask"
+    #return redirect( url_for('.index') )
     return render_template("login.html", status=message)
 
 @flaskRoutes.route('/admin')
 def admin():
-    users = db.getUsers()
+    users = current_app.auth.db.getUsers()
     return render_template("admin.html", users=users)
 
 @flaskRoutes.route('/logs')
 def logs():
     try:
-        userFilePath = os.path.join(current_app.configs[1],"log.txt")
-        logUser = tools.tail(userFilePath, n=100)
+        userFilePath = os.path.join("models/storage","log.txt")
+        logUser = tools.tail(userFilePath, n=150)
     except:
         logUser = ""
     return render_template("logs.html", logUser=logUser)
@@ -147,9 +150,10 @@ def logout():
 @flaskRoutes.route('/sendcode')
 def sendcode():
     code = secrets.token_urlsafe()
-    m = "O seu código de validação para a App SSI é: " + code
+    message = "Validation code for SSI APP: " + code
     current_app.auth.verificationCode = code
-    tools.sendEmail(message=m, to=current_app.auth.user.email)
+    to=current_app.auth.user.email
+    tools.sendEmail(message, to)
     return Response("Email sent")
 
 @flaskRoutes.route('/codeverification', methods=['GET', 'POST'])
