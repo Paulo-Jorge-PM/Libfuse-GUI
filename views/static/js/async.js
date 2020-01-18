@@ -45,3 +45,27 @@ function folder() {
 	    }
     });
 }
+
+function generateCode() {
+    $.ajax({
+	    url: '/sendcode',
+	    success: function(data){
+	    	
+	    },
+	    error: function(error){
+		    console.log(error);
+	    }
+    });
+}
+
+function resetcode() {
+    $.ajax({
+	    url: '/resetcode',
+	    success: function(data){
+	    	
+	    },
+	    error: function(error){
+		    console.log(error);
+	    }
+    });
+}

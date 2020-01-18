@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+<div id="contentBar">
+<h1>LOGS:</h1>
+</div>
+
+<div id="mainContent">
+
+<div id="logs" style="background:#d3d3d3;min-height:150px;border:1px solid #333333;padding:5px 10px;">
+<h3>Registo dos últimos 100 logs de todos os utilizadores:</h3>
+<span class="log" style="font-size:10px;">
+{% for line in logUser %}
+{{ line }}<br>
+{% endfor %}
+</span>
+</div>
+
+</div><!--/mainContent-->
+
+<script>
+
+</script>
+
+{% endblock %}

@@ -9,15 +9,21 @@ class Main:
 
     def __init__(self):
         self.configs = self.readConfigs()
-        #self.checkDirs(self.configs[1], self.configs[2])
 
-        tools.checkDirs(self.configs[1], self.configs[2])
+        #remove old mount folder 1st, sometimes give error if not empty
+        try:
+            tools.removeMount(self.configs[1])
+        except:
+            pass
 
-        self.auth = authentication.Auth(self.configs)
+        tools.createDir(self.configs[1])
+        tools.createDir(self.configs[2])
+
+        self.auth = authentication.Auth(configs=self.configs)
         self.gui = self.setGui()
 
     def readConfigs(self):
-        #to do: read constants from the config file instead
+        #to do: read constants from a config file instead
         GUI = "webview"
         dirname = os.path.dirname(__file__)
         MOUNTPOINT = os.path.join(dirname, 'models/mountpoint')
@@ -29,15 +35,6 @@ class Main:
     def setGui(self):
         if self.configs[0] == "webview": 
             return gui.Gui(configs=self.configs, auth=self.auth)
-
-    def checkDirs(self, mountpoint, root):
-        try:
-            if not os.path.exists(mountpoint):
-                os.makedirs(mountpoint)
-            if not os.path.exists(root):
-                os.makedirs(root)
-        except:
-            pass
 
 if __name__ == '__main__':
     main = Main()

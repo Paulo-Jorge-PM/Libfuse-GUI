@@ -1,0 +1,11 @@
+timestamp: 2020-01-12T11:40:03.957106
+CREATE TABLE "users"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "username" CHAR(512),
+    "email" CHAR(512),
+    "password" CHAR(512),
+    "userRole" CHAR(512),
+    "secureKey" CHAR(512),
+    "dateRegistration" TIMESTAMP
+);
+success!

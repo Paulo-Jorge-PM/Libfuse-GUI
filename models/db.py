@@ -23,8 +23,12 @@ class Db:
             self.db = DAL(self.uri, folder=self.folder, pool_size=5, lazy_tables=False)
             #, migrate_enabled=False, migrate=False, lazy_tables=True
             self.tables()
+            self.db._adapter.reconnect()#in some cases gives thread error without
         else:
-            print("Error: db already open")
+            print("Nota: db already open, closing and restarting connection")
+            #close in case a process forgot to close
+            self.close()
+            self.connect()
 
     def close(self):
         self.db.close()
@@ -41,7 +45,6 @@ class Db:
                 Field('username', type='string'), 
                 Field('email', type='string'),
                 Field('password', type='string'),
-                Field('uid', type='integer', default=0),
                 Field('userRole', type='string', defaul='user'),#user, admin
                 Field('secureKey', type='string', default='0', writable=False, readable=False),#secet key token - should be used if in server side
                 Field('dateRegistration', type='datetime', writable=False, readable=False)
@@ -57,13 +60,12 @@ class Db:
         self.connect()
         import secrets#generate url safe token
         secureKey = secrets.token_urlsafe()
-        self.db.users.insert(username=username, email=email, password=password, uid=0, userRole="user", secureKey=secureKey, dateRegistration=dateRegistration)
+        self.db.users.insert(username=username, email=email, password=password, userRole="user", secureKey=secureKey, dateRegistration=dateRegistration)
         self.db.commit()
         self.db.close()
 
     def loginUser(self, username, password):
         self.connect()
-        self.db._adapter.reconnect()#gives thread error without
         user = self.db( (self.db.users.username == username) & (self.db.users.password == password) ).select().first()
         self.db.close()
         #if no user, it will return user = None

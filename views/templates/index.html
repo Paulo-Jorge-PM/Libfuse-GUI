@@ -3,7 +3,6 @@
 {% block content %}
 
 <div id="contentBar">
-    <div id="timer">&#128337; Refresh in: <span></span></div>
     <span><h3>SISTEMA DE FICHEIROS LIBFUSE</h3></span>
 </div>
 
@@ -13,25 +12,54 @@
 
 
 <p style="background:#333333;color:#ffffff;padding:1px 5px;"><b>Mountpoint:</b> {{ MOUNTPOINT }}</p>
-<p style="background:#333333;color:#ffffff;padding:1px 5px;"><b>Root:</b> {{ ROOTPATH }}</p>
+<p style="background:#333333;color:#ffffff;padding:1px 5px;"><b>Root:</b> {% if loginStatus %} {{ userpath }} {% else %} <span style="color:red;">Make login first!</span> {% endif %}</p>
 
 
-<br /><br />
+    {% if loginStatus == False %}
+	<br>
+	<div style="padding:10px 20px;text-align:center;"><b>Welcome!</b><br>You are not loged in!<br>Buttons locked, please login/register to unlock app.</div>
+	{% endif %}
+
+    {% if loginStatus == True and verification == False %}
+    <br>
+    <div id="verification" style="padding:10px 20px;text-align:center;background:pink;padding:20px;">
+        <b><i>OPEN</i> command LOCKED!</b>
+        <br>
+        <button onclick="verificationCode()">&#128477; UNLOCK</button>
+    </div>
+
+    <div id="codigo" style="display:none;padding:10px 20px;text-align:center;background:pink;padding:20px;">
+<b>Código de verificação enviado para:</b> {{ email }}
+<br>
+<form action="{{ url_for('.codeverification') }}" method="POST">
+    <b>Insira o código recebido:</b> <br>
+    <input type="text" name="code" />
+    <br><input type="submit" value="Desbloquear" />
+</form>
+<br>
+<div id="timer">&#128337; Tem: <span></span> segundos...</div>
+    </div>
+    {% elif loginStatus == True and verification == True %}
+    <br>
+    <div style="padding:10px 20px;text-align:center;background:green;padding:20px;">
+        <b><i>OPEN</i> command Active!</b>
+        <br>
+        Succefully unlocked!
+    </div>
+    {% endif %}
 
 
-<button onclick="startfuse()" style="color:green;">MOUNT LIBFUSE</button>
-
-<br /><br />
-
-<button onclick="stopfuse()" style="color:red;">UNMOUNT LIBFUSE</button>
-
-<br /><br />
-
-<button onclick="terminal()">Open terminal in mountpoint</button>
-
-<br /><br />
-
-<button onclick="folder()">Open folder in mountpoint</button>
+{% if loginStatus == True %}
+<br>
+<div id="logs" style="background:#d3d3d3;min-height:150px;border:1px solid #333333;padding:5px 10px;">
+<h3>User activity (20 last logs):</h3>
+<span class="log" style="font-size:10px;">
+{% for line in logUser %}
+{{ line }}<br>
+{% endfor %}
+</span>
+</div>
+{% endif %}
 
 </div>
 
@@ -39,11 +67,44 @@
 <script>
 function startfuse() {
     start();
+    $('.paused').hide();
+    $('.play').show();
 }
 
 function stopfuse() {
     stop();
+    $('.paused').show();
+    $('.play').hide();
 }
+
+
+
+var max_time=300
+var count=max_time;
+
+function timer()
+    {
+      count=count-1;
+      if (count <= 0)
+      {
+         //RESET da verificação
+         //count=max_time;
+         reset();
+      }
+      $('#timer span').text(count + " secs");
+}
+
+function verificationCode() {
+    generateCode();
+    $('#verification').hide();
+    $('#codigo').show();
+    var counter=setInterval(timer, 1000); //1000 will  run it every 1 second
+}
+
+function reset() {
+window.location.replace(window.location.href)
+}
+
 </script>
 
 {% endblock %}

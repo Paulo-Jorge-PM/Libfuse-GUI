@@ -4,8 +4,9 @@
 import webview
 import sys
 import threading
+import webview
 
-from flask import Flask
+from flask import Flask, current_app
 from views.routes import flaskRoutes
 from core.libfuse import main
 
@@ -24,12 +25,17 @@ class Gui(Flask):
         #Start weview GUI
         self.webview = self.startWebview()
 
+        #send webview context to auth
+        #self.auth.webviewContext = self.webview
+        #self.auth.flaskContext = "testttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+
 
     def startServer(self):
         self.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0# disable caching so it refresh the view in each start
         self.configApp()
         self.register_blueprint(flaskRoutes)
         self.run(debug=False, threaded=False)
+
 
     def startWebview(self):
         webview.create_window("MEI", "http://127.0.0.1:5000/")

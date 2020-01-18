@@ -21,7 +21,7 @@
 <div id="top">
 	<ul class="account">
 		{% if loginStatus %}<li>Welcome <b>{{ username.capitalize() }}</b>! </li>
-		<li><a href="{{ url_for('.index') }}" class="button">Profile</a></li>
+		<!--<li><a href="{{ url_for('.index') }}" class="button">Profile</a></li>-->
 		<li><a href="{{ url_for('.logout') }}" class="button">Logout</a></li>
 		{% else: %}
 		<li><a href="{{ url_for('.login') }}" class="button noBlock">Login</a></li>
@@ -31,23 +31,41 @@
 
 	<ul class="nav">
 		<li><a href="{{ url_for('.index') }}" class="button">&#9872; Homepage</a></li>
-		<li><a href="{{ url_for('.index') }}" class="button">&#128477; Admin</a></li>
+		<li><a href="{{ url_for('.admin') }}" class="button">&#128477; Admin</a></li>
 		<li><a href="{{ url_for('.index') }}" class="button">&#8644; Logs</a></li>
 	</ul>
 </div>
 
 <div id="main">
-	{% block balance %}{% endblock %}
-	<div id="left">
+	
+	<div id="left" style="min-height:550px;">
 		<div id="balance" style="font-size:42px;"><span><span class="paused">&#x23f8;</span><span class="play" style="color:green;display:none;">&#x25b6;</span></span></div>
-		<div style="margin-top:15px;text-align:center;"><span style="color:#ffffff;background:#333333;font-weight:bold;padding:2px 10px;background:red;">LIBFUSE STOPPED</span></div>
+		
+		<div style="margin-top:15px;text-align:center;" class="paused"><span style="color:#ffffff;background:#333333;font-weight:bold;padding:2px 10px;background:red;">LIBFUSE STOPPED</span></div>
+		
+		<div style="margin-top:15px;text-align:center;display:none;" class="play"><span style="color:#ffffff;background:#333333;font-weight:bold;padding:2px 10px;background:green;">LIBFUSE RUNNING</span></div>
 
-		{% if loginStatus == False %}
-		<br><div style="padding:10px 20px;text-align:center;"><b>Welcome!</b><br>You are not loged in!<br>Buttons locked, please login/register to unlock app.</div>
-		{% endif %}
-	</div>
+<br /><br />
 
-	<div id="content">
+    <div style="text-align:center;">
+    <button onclick="startfuse()" style="color:green;">MOUNT LIBFUSE</button>
+
+    <br /><br />
+
+    <button onclick="stopfuse()" style="color:red;">UNMOUNT LIBFUSE</button>
+
+    <br /><br />
+
+    <button onclick="terminal()">Open terminal in mountpoint</button>
+
+    <br /><br />
+
+    <button onclick="folder()">Open folder in mountpoint</button>
+    </div>
+
+</div>
+
+	<div id="content" style="min-height:550px;">
 	{% block content %}{% endblock %}
 	</div>
 </div>
