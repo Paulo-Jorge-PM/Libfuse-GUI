@@ -20,8 +20,9 @@ class Db:
 
     def connect(self):
         if not self.db:
-            self.db = DAL(self.uri, folder=self.folder, pool_size=5, lazy_tables=False)
-            #, migrate_enabled=False, migrate=False, lazy_tables=True
+            self.db = DAL(self.uri, folder=self.folder, pool_size=5, migrate_enabled=False, migrate=False, lazy_tables=True)
+            #self.db = DAL(self.uri, folder=self.folder, pool_size=5, 
+            #,migrate_enabled=False, migrate=False, lazy_tables=True
             self.tables()
             self.db._adapter.reconnect()#in some cases gives thread error without
         else:

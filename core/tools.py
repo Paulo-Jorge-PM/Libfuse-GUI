@@ -52,7 +52,7 @@ def sendEmail(message, to):
     PORT = "25"
     USER = "b4701"
     PASS = "11J11YK5"
-    FROM = "b4701@ilch.uminho.pt"
+    FROM = "b4701@elach.uminho.pt"
     TO = [to]
     SUBJECT = 'SSI CODE VALIDATE'
 
@@ -63,7 +63,7 @@ def sendEmail(message, to):
     message['Subject'] = SUBJECT
 
     # send email
-    email = smtplib.SMTP()
+    email = smtplib.SMTP(SERVER)
     email.connect(SERVER,PORT)
     email.starttls()
     email.login(USER,PASS)

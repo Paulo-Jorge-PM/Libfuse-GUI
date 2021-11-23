@@ -1,0 +1,7 @@
+>LOG: 2020/01/18 20:59:11 | Verification: none | Log: Action: MKDIR | Path:/home/paulo/Repos/MEI/Segurança Sistemas Informáticos/ssi-tp3/models/storage/userid1/teste
+>LOG: 2020/01/18 20:59:14 | Verification: none | Log: Action: CREATE | Path:/home/paulo/Repos/MEI/Segurança Sistemas Informáticos/ssi-tp3/models/storage/userid1/text.txt
+>LOG: 2020/01/18 20:59:14 | Verification: none | Log: Action: FLUSH | Path:/home/paulo/Repos/MEI/Segurança Sistemas Informáticos/ssi-tp3/models/storage/userid1/text.txt
+>LOG: 2020/01/18 20:59:14 | Verification: none | Log: Action: RELEASE | Path:/home/paulo/Repos/MEI/Segurança Sistemas Informáticos/ssi-tp3/models/storage/userid1/text.txt
+>LOG: 2020/01/18 20:59:14 | Verification: none | Log: Action: CHMOD | Path:/home/paulo/Repos/MEI/Segurança Sistemas Informáticos/ssi-tp3/models/storage/userid1/text.txt
+>LOG: 2020/01/18 20:59:14 | Verification: none | Log: Action: ULTIMENS | Path:/home/paulo/Repos/MEI/Segurança Sistemas Informáticos/ssi-tp3/models/storage/userid1/text.txt
+>LOG: 2020/01/18 20:59:23 | Verification: none | Log: Action: MKDIR | Path:/home/paulo/Repos/MEI/Segurança Sistemas Informáticos/ssi-tp3/models/storage/userid1/teste/teste2
